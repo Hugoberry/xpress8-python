@@ -4,7 +4,14 @@
 #ifndef XPRESS_COMPAT_H
 #define XPRESS_COMPAT_H
 
-#if !defined(_MSC_VER)
+#if defined(_MSC_VER)
+
+/* MSVC: pull in the SAL annotation macros (__in_opt, __in_bcount, etc.).
+ * These are not implicitly included by the CRT when consumers include only
+ * <stdlib.h>/<memory.h>, so xpress.h's signatures fail to parse without it. */
+#include <sal.h>
+
+#else /* !_MSC_VER */
 
 #ifndef UNIX
 #define UNIX 1
