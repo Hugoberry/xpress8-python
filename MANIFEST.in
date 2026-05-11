@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+include pyproject.toml
+include xpress8.pyx
+include xpress8.pxd
+recursive-include src *.c *.i
+recursive-include include *.h
