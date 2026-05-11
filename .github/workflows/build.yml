@@ -55,7 +55,10 @@ jobs:
         uses: pypa/cibuildwheel@v2.23.2
         env:
           CIBW_BUILD: cp${{ matrix.python-version == '3.10' && '310' || matrix.python-version == '3.11' && '311' || matrix.python-version == '3.12' && '312' || matrix.python-version == '3.13' && '313' || '39' }}-*
-          CIBW_ARCHS_LINUX: "auto aarch64"
+          # i686 is excluded on purpose: GCC predefines `i386` on 32-bit Linux,
+          # which activates inline-assembly paths in the vendored ESE sources
+          # that only assemble under MSVC.
+          CIBW_ARCHS_LINUX: "x86_64 aarch64"
           CIBW_SKIP: "*-musllinux_*"
 
       # Windows: a plain build is fine; setuptools picks the right MSVC.
